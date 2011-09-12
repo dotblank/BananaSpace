@@ -29,6 +29,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 /**
  * Generates a Planetoids world.
@@ -45,6 +46,7 @@ public class PlanetsChunkGenerator extends ChunkGenerator {
     private Map<Material, Float> allowedCores;
     private Map<Point, List<Planetoid>> cache;
     private Configuration planetConfig;
+    private String worldName;
     private static final int SYSTEM_SIZE = 100;
     private long seed; // Seed for generating planetoids
     private int density; // Number of planetoids it will try to create per
@@ -95,20 +97,21 @@ public class PlanetsChunkGenerator extends ChunkGenerator {
      * @param planetConfig Configuration
      * @param plugin Plugin
      */
-    public PlanetsChunkGenerator(Configuration planetConfig, Plugin plugin) {
+    public PlanetsChunkGenerator(String wName, Configuration planetConfig, Plugin plugin) {
         this.plugin = plugin;
         this.planetConfig = planetConfig;
-        this.seed = (long) planetConfig.getDouble("seed", 0.0);
-        this.density = planetConfig.getInt("density", 15000);
-        minSize = planetConfig.getInt("minSize", 4);
-        maxSize = planetConfig.getInt("maxSize", 20);
-        minDistance = planetConfig.getInt("minDistance", 10);
-        floorBlock = Material.matchMaterial(planetConfig.getString(
-                "floorBlock", "STATIONARY_WATER"));
-        this.floorHeight = planetConfig.getInt("floorHeight",
+        worldName = wName;
+        this.seed = (long) planetConfig.getDouble("worlds." + worldName + ".seed", plugin.getServer().getWorlds().get(0).getSeed());
+        this.density = planetConfig.getInt("worlds." + worldName + ".density", 15000);
+        minSize = planetConfig.getInt("worlds." + worldName + ".minSize", 4);
+        maxSize = planetConfig.getInt("worlds." + worldName + ".maxSize", 20);
+        minDistance = planetConfig.getInt("worlds." + worldName + ".minDistance", 10);
+        floorBlock = Material.matchMaterial(planetConfig.getString("worlds." + worldName + 
+                ".floorBlock", "STATIONARY_WATER"));
+        this.floorHeight = planetConfig.getInt("worlds." + worldName + ".floorHeight",
                 0);
-        minShellSize = planetConfig.getInt("minShellSize", 3);
-        maxShellSize = planetConfig.getInt("maxShellSize", 5);
+        minShellSize = planetConfig.getInt("worlds." + worldName + ".minShellSize", 3);
+        maxShellSize = planetConfig.getInt("worlds." + worldName + ".maxShellSize", 5);
 
         loadAllowedBlocks();
 
@@ -151,7 +154,7 @@ public class PlanetsChunkGenerator extends ChunkGenerator {
 
         if (curSystem == null) {
             // if not, does it exist on disk?
-            File systemFolder = new File(plugin.getDataFolder(), "systems");
+            File systemFolder = new File(plugin.getDataFolder(), worldName + "_systems");
             if (!systemFolder.exists()) {
                 systemFolder.mkdir();
             }

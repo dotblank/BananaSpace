@@ -5,6 +5,7 @@ package me.iffa.bananaspace.config;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Iterator;
 
 //BananaSpace Import
 import me.iffa.bananaspace.BananaSpace;
@@ -12,6 +13,7 @@ import me.iffa.bananaspace.BananaSpace;
 // Bukkit Imports
 import org.bukkit.Bukkit;
 import org.bukkit.util.config.Configuration;
+import org.bukkit.util.config.ConfigurationNode;
 
 /**
  * A class that handles the planet generation configuration file.
@@ -56,9 +58,6 @@ public class SpacePlanetConfig {
                     myConfig = new Configuration(configFile);
                     myConfig.load();
                     loaded = true;
-                    if ((long) myConfig.getDouble("seed", -1.0) == -1) {
-                        myConfig.setProperty("seed", Bukkit.getServer().getWorlds().get(0).getSeed());
-                    }
                     BananaSpace.log.info(BananaSpace.prefix + " Generated planet configuration for version " + BananaSpace.version);
                 } catch (Exception e) {
                     System.out.println(e.toString());

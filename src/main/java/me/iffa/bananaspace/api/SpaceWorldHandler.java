@@ -71,7 +71,7 @@ public class SpaceWorldHandler {
                         plugin.getServer().createWorld(world, env, new SpaceChunkGenerator());
                     } else {
                         BananaSpace.debugLog("Creating startup world '" + world + "' with planet generator.");
-                        plugin.getServer().createWorld(world, env, new PlanetsChunkGenerator(SpacePlanetConfig.getConfig(), plugin));
+                        plugin.getServer().createWorld(world, env, new PlanetsChunkGenerator(world,SpacePlanetConfig.getConfig(), plugin));
                     }
                 }
             }
@@ -133,7 +133,7 @@ public class SpaceWorldHandler {
         if (log) {
             BananaSpace.log.info(BananaSpace.prefix + " Plugin '" + plugin.getDescription().getName() + "' starting to create spaceworld '" + worldname + "'");
         }
-        plugin.getServer().createWorld(worldname, World.Environment.NORMAL, new PlanetsChunkGenerator(SpacePlanetConfig.getConfig(), plugin));
+        plugin.getServer().createWorld(worldname, World.Environment.NORMAL, new PlanetsChunkGenerator(worldname,SpacePlanetConfig.getConfig(), plugin));
         World world = plugin.getServer().getWorld(worldname);
         spaceWorlds.add(world);
         BananaSpace.pailInt.addSpaceList(worldname);
