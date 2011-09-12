@@ -66,7 +66,7 @@ public class PlanetsChunkGenerator extends ChunkGenerator {
         allowedCores = new EnumMap<Material, Float>(Material.class);
         allowedShells = new EnumMap<Material, Float>(Material.class);
         for (String s : planetConfig.getStringList(
-                "blocks.cores", null)) {
+                "worlds." + worldName + ".blocks.cores", null)) {
             String[] sSplit = s.split("-");
             Material newMat = Material.matchMaterial(sSplit[0]);
             if (newMat.isBlock()) {
@@ -78,7 +78,7 @@ public class PlanetsChunkGenerator extends ChunkGenerator {
             }
         }
         for (String s : planetConfig.getStringList(
-                "blocks.shells", null)) {
+        		"worlds." + worldName + ".blocks.shells", null)) {
             String[] sSplit = s.split("-");
             Material newMat = Material.matchMaterial(sSplit[0]);
             if (newMat.isBlock()) {
