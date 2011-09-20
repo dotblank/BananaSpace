@@ -334,7 +334,7 @@ public class PlanetsChunkGenerator extends ChunkGenerator {
                     break;
             }
 
-            curPl.shellThickness = rand.nextInt(maxShellSize - minShellSize)
+            curPl.shellThickness = rand.nextInt(Math.abs(maxShellSize - minShellSize))
                     + minShellSize;
             curPl.radius = rand.nextInt(maxSize - minSize) + minSize;
 

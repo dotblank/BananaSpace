@@ -68,7 +68,7 @@ public class SpaceCommand implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (BananaSpace.getPlayerHandler().hasPermission("bananaspace.teleport.enter", player) || BananaSpace.getPlayerHandler().hasPermission("bananaspace.teleport.exit", player)) {
-            if (args.length == 2 && args[0].equalsIgnoreCase("enter")) {
+            if (args.length == 1 && args[0].equalsIgnoreCase("enter")) {
                 if (BananaSpace.getPlayerHandler().hasPermission("bananaspace.teleport.enter", player)) {
                     if (BananaSpace.worldHandler.getSpaceWorlds().get(0) == player.getWorld()) {
                         player.sendMessage(ChatColor.RED + "You are already in that space world!");
@@ -89,7 +89,7 @@ public class SpaceCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "You don't have permission!");
                 return true;
             } else if (args.length == 2 && args[0].equalsIgnoreCase("enter")) {
-                if (BananaSpace.getPlayerHandler().hasPermission("bananaspace.teleport.enter", player)) {
+                if (BananaSpace.getPlayerHandler().hasPermission("bananaspace.teleport.enter." + args[1], player)) {
                     if (plugin.getServer().getWorld(args[1]) == null) {
                         player.sendMessage(ChatColor.RED + "The world was not found!");
                         return true;
